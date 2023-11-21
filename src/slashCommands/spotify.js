@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const addQueue = require('../utils/addQueue.js');
 const initBot = require('../utils/initBot.js');
-const clearChannelTxt = require('../utils/clearChannelTxt.js');
+const clearQueue = require('../utils/clearQueue.js');
 
 // Importar el módulo 'axios' para hacer solicitudes HTTP
 const axios = require('axios');
@@ -53,7 +53,7 @@ const execute = async (interaction, client) => {
         const canciones = playlistResponse.data.tracks.items.map(item => `${item.track.name} - ${item.track.artists[0].name}`);
 
         // Limpiamos la cola de reproducción
-        clearChannelTxt(interaction);
+        clearQueue(interaction);
         
         // Llamar a la función newQueue para cada canción
         canciones.forEach(cancion => {
