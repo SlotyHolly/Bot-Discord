@@ -56,7 +56,7 @@ git clone https://github.com/SlotyHolly/Bot-Discord.git
 ```
 ##### Instalar las dependencias: 
 ```git
-npm run build
+npm install
 ```
 ##### Cargar comandos en tu servidor:
 ```terminal
