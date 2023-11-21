@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-function clearJsonJsonFile(filePath) {
+function clearQueue(filePath) {
     try {
         // Escribe un objeto vacío o la estructura inicial deseada
         fs.writeFileSync(filePath, JSON.stringify({}, null, 2), 'utf8');
@@ -15,4 +15,4 @@ function clearJsonJsonFile(filePath) {
 const pathJSON = path.join(__dirname, '../../queue.json');
 
 // Llamar a la función para limpiar el archivo JSON
-clearJsonJsonFile(pathJSON);
+clearQueue(pathJSON);
