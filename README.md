@@ -38,7 +38,7 @@ Instrucciones paso a paso sobre cómo instalar y configurar el bot en un servido
 
 ##### Clonar el repositorio:
 ```git
-git clone https://github.com/SlotyHolly/Bot-Musica-Discord.git
+git clone https://github.com/SlotyHolly/Bot-Discord.git
 ```
 ##### Instalar NodeJS: 
 - [Release NodeJS](https://nodejs.org/en/download/current)
