@@ -7,14 +7,14 @@
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
-    "updatecommands": "node ./src/utils/updateCommands.js"
+    "updatecommands": "node src/utils/updateCommands.js"
   },
   "dependencies": {
     "@discordjs/voice": "^0.16.1",
     "axios": "^1.6.2",
     "discord-html-transcripts": "^3.1.3",
     "discord.js": "^14.14.1",
-    "ffmpeg-static": "^5.2.0",
+    "ffmpeg": "^4.3.6",
     "googleapis": "^128.0.0",
     "libsodium-wrappers": "^0.7.13",
     "punycode": "^2.3.1",

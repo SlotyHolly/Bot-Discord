@@ -21,11 +21,12 @@ async function playVoiceChannel(client, interaction, url) {
 
     player.on('error', error => {
         console.error('Error en el reproductor de audio:', error);
-        connection.destroy();
+        interaction.followUp(`No se pudo reproducir la canción: ${url}`);
+        // Aquí puedes agregar lógica para saltar a la siguiente canción en la cola
     });
 
     try {
-        const stream = ytdl(url, { quality: 'highestaudio' });
+        const stream = ytdl(url, { filter: 'audioonly' });
         const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
         player.play(resource);
 
@@ -35,8 +36,8 @@ async function playVoiceChannel(client, interaction, url) {
         });
     } catch (error) {
         console.error('Error al reproducir la canción:', error);
-        connection.destroy();
-        throw error;
+        interaction.followUp(`No se pudo reproducir la canción: ${url}`);
+        // Aquí puedes agregar lógica para saltar a la siguiente canción en la cola
     }
 }
 
