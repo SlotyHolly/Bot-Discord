@@ -23,4 +23,12 @@ async function buscarCancion(nombreCancion) {
     }
 }
 
-module.exports = buscarCancion;
+function validarURLYoutube(url) {
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/(watch\?v=)?([a-zA-Z0-9\-_]{11})(\S*)$/;
+    return youtubeRegex.test(url);
+}
+
+module.exports = {
+    buscarCancion,
+    validarURLYoutube,
+};

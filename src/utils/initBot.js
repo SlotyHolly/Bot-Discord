@@ -1,6 +1,7 @@
 const firstJSON = require('./firstJSON.js');
 const apiYoutube = require('./apiYoutube.js');
 const playVoiceChannel = require('./playVoiceChannel.js');
+const { validarURLYoutube } = require('../utils/apiYoutube.js');
 
 async function initBot(interaction, client) {
     // Obtiene el canal de voz del usuario que envió la interacción
@@ -22,16 +23,26 @@ async function initBot(interaction, client) {
         }
 
         try {
-            const songUrl = await apiYoutube(cancion);
-            interaction.followUp(`Reproduciendo: ${cancion}`);
-            await playVoiceChannel(client, interaction, songUrl);
-
-            // Verifica si el bot sigue en el canal de voz
-            if (!voiceChannel.members.has(interaction.client.user.id)) {
-                console.log('El bot ha sido desconectado del canal de voz.');
-                await interaction.followUp('El bot ha sido desconectado del canal de voz.');
-                break;
+            // Verifica si la canción es una URL de YouTube
+            if (validarURLYoutube(cancion)) {
+                await interaction.followUp(`Reproduciendo: ${cancion}`);
+                await playVoiceChannel(client, interaction, cancion);
+                continue;
             }
+            // Si no es una URL de YouTube, busca la canción en YouTube
+            else {
+                const songUrl = await apiYoutube(cancion);
+                interaction.followUp(`Reproduciendo: ${cancion}`);
+                await playVoiceChannel(client, interaction, songUrl);
+
+                // Verifica si el bot sigue en el canal de voz
+                if (!voiceChannel.members.has(interaction.client.user.id)) {
+                    console.log('El bot ha sido desconectado del canal de voz.');
+                    await interaction.followUp('El bot ha sido desconectado del canal de voz.');
+                    break;
+            }
+        }
+
         } catch (error) {
             console.error('Error:', error);
             await interaction.followUp('Ha ocurrido un error al reproducir la canción.');
