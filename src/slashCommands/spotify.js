@@ -53,7 +53,7 @@ const execute = async (interaction, client) => {
         const canciones = playlistResponse.data.tracks.items.map(item => `${item.track.name} - ${item.track.artists[0].name}`);
 
         // Limpiamos la cola de reproducción
-        clearQueue(interaction);
+        clearQueue();
         
         // Llamar a la función newQueue para cada canción
         canciones.forEach(cancion => {

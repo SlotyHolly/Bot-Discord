@@ -1,4 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { getVoiceConnection } = require('@discordjs/voice');
+const clearQueue = require('../utils/clearQueue.js');
 
 const data = new SlashCommandBuilder()
     .setName("salir")
@@ -11,14 +13,18 @@ const execute = async (interaction, client) => {
         return await interaction.reply("¡Necesitas estar en un canal de voz para usar este comando!");
     }
     
-    await interaction.reply("¡Adiós!");
-    
-    await voiceChannel.leave();
-    }
+    const connection = getVoiceConnection(interaction.guild.id);
 
+    if (connection) {
+        connection.destroy(); // Desconectar el bot del canal de voz
+        await interaction.reply("¡Adiós!");
+        clearQueue();
+    } else {
+        await interaction.reply("No estoy en un canal de voz.");
+    }
+}
 
 module.exports = {
     data: data.toJSON(),
     execute,
 };
-

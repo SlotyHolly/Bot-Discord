@@ -8,6 +8,10 @@ function newQueue(cancion) {
     // Leer el archivo JSON existente si existe, o inicializarlo como un array vacío
     try {
         data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+        if (!Array.isArray(data)) {
+            console.error('El archivo JSON existente no contiene un array');
+            data = [];
+        }
     } catch (error) {
         data = [];
     }
@@ -18,6 +22,5 @@ function newQueue(cancion) {
     // Guardar el array actualizado en el archivo JSON
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
-
 
 module.exports = newQueue;

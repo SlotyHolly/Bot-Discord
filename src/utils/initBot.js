@@ -3,6 +3,8 @@ const apiYoutube = require('./apiYoutube.js');
 const playVoiceChannel = require('./playVoiceChannel.js');
 
 async function initBot(interaction, client) {
+    // Obtiene el canal de voz del usuario que envió la interacción
+    const voiceChannel = interaction.member.voice.channel;
 
     if (!voiceChannel) {
         await interaction.reply('Debes estar en un canal de voz para iniciar el bot.');
@@ -24,6 +26,7 @@ async function initBot(interaction, client) {
             interaction.followUp(`Reproduciendo: ${cancion}`);
             await playVoiceChannel(client, interaction, songUrl);
 
+            // Verifica si el bot sigue en el canal de voz
             if (!voiceChannel.members.has(interaction.client.user.id)) {
                 console.log('El bot ha sido desconectado del canal de voz.');
                 await interaction.followUp('El bot ha sido desconectado del canal de voz.');

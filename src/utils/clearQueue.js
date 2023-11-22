@@ -1,9 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
-function clearQueue(filePath) {
+function clearQueue() {
     try {
-        // Escribe un objeto vacío o la estructura inicial deseada
+        const filePath = path.join(__dirname, '../../queue.json');
+        // Escribe un objeto vacío en el archivo JSON
         fs.writeFileSync(filePath, JSON.stringify({}, null, 2), 'utf8');
         console.log(`El archivo JSON (${filePath}) ha sido limpiado.`);
     } catch (error) {
@@ -11,8 +12,4 @@ function clearQueue(filePath) {
     }
 }
 
-// Ruta del archivo JSON (ajusta esto a tu archivo específico)
-const pathJSON = path.join(__dirname, '../../queue.json');
-
-// Llamar a la función para limpiar el archivo JSON
-clearQueue(pathJSON);
+module.exports = clearQueue;
