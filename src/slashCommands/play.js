@@ -16,7 +16,7 @@ async function execute(interaction, client) {
         if (!firsJSON) {
             return interaction.reply('No hay nada que reproducir.');
         }
-        
+
         if (player.state.status !== AudioPlayerStatus.Paused) {
             return interaction.reply('El bot no está pausado.');
         }
@@ -29,6 +29,7 @@ async function execute(interaction, client) {
         await interaction.reply('Ha ocurrido un error al intentar reanudar la reproducción.', error);
         console.error(error);
     }
+}
 
 // Exporta la función y las propiedades del comando
 module.exports = {
