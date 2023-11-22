@@ -7,11 +7,6 @@ const data = new SlashCommandBuilder()
     .setDescription("Desconectar el bot del canal de voz");
 
 const execute = async (interaction, client) => {
-    const voiceChannel = interaction.member.voice.channel;
-    
-    if (!voiceChannel) {
-        return await interaction.reply("¡Necesitas estar en un canal de voz para usar este comando!");
-    }
     
     const connection = getVoiceConnection(interaction.guild.id);
 

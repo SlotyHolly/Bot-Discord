@@ -7,7 +7,7 @@
   "main": "src/bot.js",
   "scripts": {
     "start": "node src/bot.js",
-    "updatecommands": "node src/utils/createCommands.js"
+    "updatecommands": "node ./src/utils/createCommands.js"
   },
   "dependencies": {
     "@discordjs/voice": "^0.16.1",
