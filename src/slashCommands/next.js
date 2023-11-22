@@ -1,6 +1,6 @@
 const { AudioPlayerStatus } = require('@discordjs/voice');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const fistJson = require('../utils/firstJson');
+const fistJson = require('../utils/firstJSON.js');
 const data = new SlashCommandBuilder()
     .setName("next")
     .setDescription("Reproduce la siguiente canción.");
