@@ -4,10 +4,10 @@
   "author": "SlotyHolly",
   "license": "ISC",
   "description": "Bot de Discord para reproducir musica",
-  "main": "src/bot.js",
+  "main": "bot.js",
   "scripts": {
-    "start": "node src/bot.js",
-    "updatecommands": "node ./src/utils/createCommands.js"
+    "start": "node bot.js",
+    "updatecommands": "node ./src/utils/updateCommands.js"
   },
   "dependencies": {
     "@discordjs/voice": "^0.16.1",
