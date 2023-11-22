@@ -17,8 +17,11 @@ function firstJSON() {
             return null;
         }
 
-        // Obtener y eliminar el primer elemento
-        const firstElement = data.shift();
+        // Obtener el primer elemento
+        const firstElement = data[0];
+
+        // Eliminar el primer elemento del array
+        data.shift();
 
         // Guardar el array actualizado en el archivo JSON
         fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));

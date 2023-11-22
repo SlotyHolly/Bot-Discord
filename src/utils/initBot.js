@@ -1,7 +1,6 @@
 const firstJSON = require('./firstJSON.js');
-const apiYoutube = require('./apiYoutube.js');
 const playVoiceChannel = require('./playVoiceChannel.js');
-const { validarURLYoutube } = require('../utils/apiYoutube.js');
+const { buscarCancion, validarURLYoutube } = require('./apiYoutube.js');
 
 async function initBot(interaction, client) {
     // Obtiene el canal de voz del usuario que envió la interacción
@@ -31,7 +30,7 @@ async function initBot(interaction, client) {
             }
             // Si no es una URL de YouTube, busca la canción en YouTube
             else {
-                const songUrl = await apiYoutube(cancion);
+                const songUrl = await buscarCancion(cancion);
                 interaction.followUp(`Reproduciendo: ${cancion}`);
                 await playVoiceChannel(client, interaction, songUrl);
 

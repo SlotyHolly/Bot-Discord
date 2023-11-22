@@ -8,10 +8,6 @@ const data = new SlashCommandBuilder()
 // Define la función execute
 async function execute(interaction, client) {
     const player = client.queue.get(interaction.guild.id)
-    if (!fistJson()) {
-        await interaction.reply("No hay canciones en la lista de reproducción.");
-        return;
-    }
     if (!player) {
         await interaction.reply("No estoy en un canal de voz.");
         return;
