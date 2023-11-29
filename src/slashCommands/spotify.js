@@ -18,13 +18,7 @@ const data = new SlashCommandBuilder()
 // Función para obtener el nombre de cada canción en una playlist de Spotify
 const execute = async (interaction, client) => {
     // Obtener el argumento del comando
-    const playlistLink = interaction.options.getString('playlist');
-
-        // Comprobar si el enlace de la playlist es null
-    if (!playlistLink) {
-        await interaction.reply('Por favor, proporciona un enlace de playlist válido.');
-        return;
-    }
+    const playlistLink = interaction.options.getString('Playlist:');
 
     try {
         // Dividir el enlace de la playlist para obtener el ID de la playlist
