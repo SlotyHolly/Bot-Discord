@@ -11,7 +11,7 @@ const data = new SlashCommandBuilder()
     .setName('spotify')
     .setDescription('Agregar todas las canciones de una lista de reproducción de Spotify a la cola de reproducción.')
     .addStringOption(option =>
-        option.setName('playlist')
+        option.setName('Playlist:')
             .setDescription('Enlace de la lista de reproducción de Spotify')
             .setRequired(true));
 
@@ -22,29 +22,36 @@ const execute = async (interaction, client) => {
 
     try {
         // Dividir el enlace de la playlist para obtener el ID de la playlist
-        const playlistId = playlistLink.split('playlist/')[1].split('?')[0];
-        
+        const [, tipo, id] = playlistLink.split('/').filter(parte => parte !== 'open.spotify.com' && parte !== '');
         // Obtener un nuevo token de acceso de Spotify
         const response = await axios.post('https://accounts.spotify.com/api/token', null, {
-            params: {
-                grant_type: 'client_credentials'
-            },
+            params: { grant_type: 'client_credentials' },
             headers: {
                 Authorization: `Basic ${Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64')}`
             }
         });
 
         const accessToken = response.data.access_token;
+        let canciones = [];
 
-        // Hacer una solicitud GET a la API de Spotify para obtener la información de la playlist
-        const playlistResponse = await axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-
-        // Obtener el nombre y el artista de cada canción en la playlist
-        const canciones = playlistResponse.data.tracks.items.map(item => `${item.track.name} - ${item.track.artists[0].name}`);
+        // Realizar la solicitud a la API de Spotify según el tipo
+        if (tipo === 'playlist') {
+            const playlistResponse = await axios.get(`https://api.spotify.com/v1/playlists/${id}`, {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            canciones = playlistResponse.data.tracks.items.map(item => `${item.track.name} - ${item.track.artists[0].name}`);
+        } else if (tipo === 'album') {
+            const albumResponse = await axios.get(`https://api.spotify.com/v1/albums/${id}`, {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            canciones = albumResponse.data.tracks.items.map(item => `${item.name} - ${item.artists[0].name}`);
+        } else if (tipo === 'track') {
+            const trackResponse = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            const track = trackResponse.data;
+            canciones.push(`${track.name} - ${track.artists[0].name}`);
+        }
 
         // Limpiamos la cola de reproducción
         clearQueue();
