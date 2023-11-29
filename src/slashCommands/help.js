@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 // Define los datos del comando
 const data = new SlashCommandBuilder()
-  .setName("comandos")
+  .setName("help")
   .setDescription("Muestra todos los comandos disponibles")
 
 // Define la función que se ejecutará cuando se llame al comando

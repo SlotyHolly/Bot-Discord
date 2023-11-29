@@ -5,12 +5,15 @@ Es un bot interactivo de Discord con habilidades como reproducir música directa
 
 ## Características
 
-- Enviar mensajes de saludo.
+- Enviar mensajes de saludo, junto con el ping del bot.
 - Agregar canciones desde Spotify a la cola de reproducción.
-- Reproducir videos de YouTube en el canal de voz.
+- Pasar a la siguiente canción de la cola de reproducción.
 - Buscar y reproducir canciones de YouTube por su nombre.
+- Reproducir canciones de YouTube en el canal de voz.
+- Pausar la canción actual.
+- Reanudar la canción actual.
+- Activar el modo aleatorio.
 - Desconectar el bot del canal de voz.
-- Agregar canciones a la cola de reproducción.
 
 ## Comandos
 
@@ -20,7 +23,11 @@ Aquí tienes una lista de los comandos disponibles y qué hace cada uno:
 - `/spotify <url>`: Agregar todas las canciones de una lista de reproducción de Spotify a la cola de reproducción.
 - `/youtube <url>`: Reproducir un video de YouTube en el canal de voz.
 - `/buscar <nombre>`: Buscar una canción en YouTube por su nombre y reproducirla en el canal de voz.
-- `/encolar`: Agregar una canción a la cola de reproducción.
+- `/next`: Reproducir la siguiente canción de la cola de reproducción.
+- `/pause`: Pausar la canción actual.
+- `/play`: Reanudar la canción actual.
+- `/shuffle`: Activar el modo aleatorio.
+- `/help`: Mostrar la lista de comandos.
 - `/salir`: Desconectar el bot del canal de voz.
 
 ## Instalación
@@ -41,8 +48,23 @@ Instrucciones paso a paso sobre cómo instalar y configurar el bot en un servido
 git clone https://github.com/SlotyHolly/Bot-Discord.git
 ```
 ##### Instalar NodeJS: 
-- [Release NodeJS](https://nodejs.org/en/download/current)
-  
+```git
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl gnupg
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+```
+##### Actualizar source.list: 
+```git
+NODE_MAJOR=21
+echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+```
+##### Actualizamos e instalamos NodeJS: 
+```git
+sudo apt-get update
+sudo apt-get install nodejs -y
+```
+
 ##### Configurar config.json con sus claves de API:
 ```json
 {
@@ -54,17 +76,37 @@ git clone https://github.com/SlotyHolly/Bot-Discord.git
   "YOUTUBE_API_KEY": "TU_CLAVE_API"
 }
 ```
+
 ##### Instalar las dependencias: 
 ```git
 npm install
 ```
+
 ##### Cargar comandos en tu servidor:
 ```terminal
 npm run updatecommands
 ```
-##### Iniciar el bot:
+
+##### Instalar PM2 para montar el bot:
 ```terminal
-npm run start
+npm install pm2 -g
+```
+
+##### Iniciar el Bot con PM2:
+```terminal
+pm2 start bot.js --name "mi-bot-discord"
+```
+Reemplaza "mi-bot-discord" con el nombre que quieras darle a este proceso en PM2.
+
+#####  Configuración Automática de Reinicio:
+```terminal
+pm2 startup
+```
+Después de ejecutar este comando, PM2 te proporcionará un comando que necesitas copiar y ejecutar para completar la configuración.
+
+#####  Guardar la Lista de Procesos:
+```terminal
+pm2 save
 ```
 
 ## Cómo Usarlo
@@ -87,13 +129,32 @@ Una vez que **Bot** esté activo en tu servidor de Discord, usarlo es muy sencil
    - Escribe `/buscar <nombre>` en el chat, reemplazando `<nombre>` con el nombre de la canción que deseas buscar.
    - El bot buscará la canción en YouTube y la reproducirá en el canal de voz.
 
-5. **Desconectar el Bot del Canal de Voz**:
-   - Si deseas que el bot deje el canal de voz, simplemente escribe `/salir` en el chat.
-   - El bot se desconectará del canal de voz.
-
-6. **Agregar una Canción a la Cola de Reproducción**:
+5. **Agregar una Canción a la Cola de Reproducción**:
    - Utiliza el comando `/encolar` seguido de los detalles de la canción que deseas agregar.
    - El bot añadirá la canción especificada a la cola de reproducción actual.
+
+6. **Cambiar de Canción**:
+   - Si deseas cambiar la canción que se está reproduciendo actualmente, simplemente escribe `/next` en el chat.
+   - El bot reproducirá la siguiente canción de la cola de reproducción.
+
+7. **Pausar la Canción**:
+   - Si deseas pausar la canción que se está reproduciendo actualmente, simplemente escribe `/pause` en el chat.
+   - El bot pausará la canción actual.
+
+8. **Reanudar la Canción**:   
+   - Si deseas reanudar la canción que se está reproduciendo actualmente, simplemente escribe `/play` en el chat.
+   - El bot reanudará la canción actual.
+
+9. **Activar aleatorio**:
+   - Si deseas activar el modo aleatorio, simplemente escribe `/shuffle` en el chat.
+   - El bot activará el modo aleatorio.
+10. **Mostrar lista de comandos**:
+   - Si deseas ver la lista de comandos, simplemente escribe `/help` en el chat.
+   - El bot mostrará la lista de comandos.
+
+11. **Desconectar el Bot del Canal de Voz**:
+   - Si deseas que el bot deje el canal de voz, simplemente escribe `/salir` en el chat.
+   - El bot se desconectará del canal de voz.
 
 ¡Disfruta de la música y la interacción social con **Nombre del Bot** en tu servidor de Discord!
 
