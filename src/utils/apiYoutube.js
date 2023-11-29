@@ -34,8 +34,40 @@ function extraerIdPlaylist(url) {
     return match ? match[1] : null;
 }
 
+async function obtenerCancionesPlaylist(playlistId, canciones = [], pageToken = '') {
+    try {
+        const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlistItems`, {
+            params: {
+                part: 'snippet',
+                playlistId: playlistId,
+                maxResults: 50,
+                key: YOUTUBE_API_KEY,
+                pageToken: pageToken
+            }
+        });
+
+        const items = response.data.items;
+        const nextPageToken = response.data.nextPageToken;
+
+        items.forEach(item => {
+            canciones.push(item.snippet.title); // Agregar título de la canción al array
+        });
+
+        // Si hay un nextPageToken, hacer otra solicitud para la siguiente página
+        if (nextPageToken) {
+            return obtenerCancionesPlaylist(playlistId, canciones, nextPageToken);
+        }
+
+        return canciones;
+    } catch (error) {
+        console.error('Error al obtener datos de la playlist:', error);
+        throw new Error('Error al obtener canciones de la playlist');
+    }
+}
+
 module.exports = {
     buscarCancion,
     validarURLYoutube,
     extraerIdPlaylist,
+    obtenerCancionesPlaylist,
 };

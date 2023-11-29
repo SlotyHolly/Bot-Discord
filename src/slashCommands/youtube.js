@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { validarURLYoutube, extraerIdPlaylist } = require('../utils/apiYoutube.js');
+const { validarURLYoutube, extraerIdPlaylist, obtenerCancionesPlaylist } = require('../utils/apiYoutube.js');
 const addQueue = require('../utils/addQueue.js');
 const initBot = require('../utils/initBot.js');
 
@@ -21,22 +21,12 @@ const execute = async (interaction, client) => {
     const playlistId = extraerIdPlaylist(url);
     if (playlistId) {
         try {
-            const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${YOUTUBE_API_KEY}`);
-            const items = response.data.items;
+            const canciones = await obtenerCancionesPlaylist(playlistId);
 
-            if (items.length === 0) {
-                await interaction.reply('La playlist no contiene canciones o no se pudo acceder a ellas.');
-                return;
-            }
-
-            // Agregar cada canción de la playlist al JSON
-            items.forEach(item => {
-                const songName = item.snippet.title;
-                addQueue(songName); // Asumiendo que addQueue toma el nombre de la canción
-            });
+            // Aquí, 'canciones' es un array con todos los títulos de las canciones de la playlist
+            canciones.forEach(cancion => addQueue(cancion));
 
         } catch (error) {
-            console.error('Error al obtener datos de la playlist de YouTube:', error);
             await interaction.reply('Hubo un error al obtener los datos de la playlist de YouTube.');
             return;
         }
