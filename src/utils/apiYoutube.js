@@ -28,7 +28,14 @@ function validarURLYoutube(url) {
     return youtubeRegex.test(url);
 }
 
+function extraerIdPlaylist(url) {
+    const regex = /list=([a-zA-Z0-9_-]+)/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+}
+
 module.exports = {
     buscarCancion,
     validarURLYoutube,
+    extraerIdPlaylist,
 };
