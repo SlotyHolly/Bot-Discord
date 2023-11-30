@@ -11,14 +11,14 @@ const data = new SlashCommandBuilder()
     .setName('spotify')
     .setDescription('Agregar todas las canciones de una lista de reproducción de Spotify a la cola de reproducción.')
     .addStringOption(option =>
-        option.setName('Playlist:')
+        option.setName('playlist')
             .setDescription('Enlace de la lista de reproducción de Spotify')
             .setRequired(true));
 
 // Función para obtener el nombre de cada canción en una playlist de Spotify
 const execute = async (interaction, client) => {
     // Obtener el argumento del comando
-    const playlistLink = interaction.options.getString('Playlist:');
+    const playlistLink = interaction.options.getString('playlist');
 
     try {
         // Dividir el enlace de la playlist para obtener el ID de la playlist

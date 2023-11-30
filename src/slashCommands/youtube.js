@@ -7,12 +7,12 @@ const data = new SlashCommandBuilder()
     .setName('youtube')
     .setDescription('Agrega un video o playlist de YouTube a la cola de reproducción.')
     .addStringOption(option => 
-        option.setName('Url:')
+        option.setName('url')
             .setDescription('La URL del video o playlist de YouTube')
             .setRequired(true));
 
 const execute = async (interaction, client) => {
-    const url = interaction.options.getString('Url:');
+    const url = interaction.options.getString('url');
     
     if (!validarURLYoutube(url)) {
         await interaction.reply('Por favor, proporciona una URL válida de YouTube.');

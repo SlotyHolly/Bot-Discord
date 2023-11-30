@@ -1,14 +1,16 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const data = new SlashCommandBuilder()
-    .setName("buscar")
-    .setDescription("Buscar una canción en YouTube por su nombre y reproducirla en el canal de voz.")
-    .addStringOption(option => option.setName('Cancion:')
-    .setDescription('Nombre de la canción').setRequired(true));
+    .setName('buscar')
+    .setDescription('Bucar Cancion en youtube por el nombre.')
+    .addStringOption(option => 
+        option.setName('nombre')
+            .setDescription('Nombre de la cancion.')
+            .setRequired(true));
 
 const execute = async (interaction, client) => {
 
-    const cancionName = interaction.options.getString('Cancion:');
+    const cancionName = interaction.options.getString('nombre');
 
     // Limpiamos la cola de reproducción
     clearQueue();
