@@ -22,7 +22,7 @@ const execute = async (interaction, client) => {
 
     //try {
         // Dividir el enlace de la playlist para obtener el ID de la playlist
-    const [, tipo, id] = playlistLink.split('/').filter(parte => parte !== 'open.spotify.com' && parte !== '');
+    const [, tipo, id] = playlistLink.split('/').filter(parte => parte !== 'open.spotify.com' && parte !== '' && parte !== 'intl-es');
     // Obtener un nuevo token de acceso de Spotify
     const response = await axios.post('https://accounts.spotify.com/api/token', null, {
         params: { grant_type: 'client_credentials' },
