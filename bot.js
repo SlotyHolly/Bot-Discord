@@ -36,6 +36,7 @@ const client = new Client({
     Partials.User,
   ],
 });
+const clearChannelTxt = require('./src/utils/clearChannelTxt');
 
 client.commands = new Discord.Collection();
 
@@ -50,6 +51,10 @@ for (const file of commandFiles) {
 client.on('ready', () => {
   console.log(`Bot activo en el Servidor -> ${client.guilds.cache.first().name} <- con el nombre -> ${client.user.username} <-`);
 
+    // Llamar a clearChannelTxt cada 10 minutos
+  setInterval(() => {
+    clearChannelTxt(client);
+  }, 600000); // 600000 ms = 10 minutos
 });
 
 client.queue = new Map();

@@ -31,7 +31,7 @@ async function initBot(interaction, client) {
             // Si no es una URL de YouTube, busca la canción en YouTube
             else {
                 const songUrl = await buscarCancion(cancion);
-                interaction.followUp(`Reproduciendo: ${cancion}`);
+                await interaction.followUp(`Reproduciendo: ${cancion}`);
                 await playVoiceChannel(client, interaction, songUrl);
 
                 // Verifica si el bot sigue en el canal de voz
