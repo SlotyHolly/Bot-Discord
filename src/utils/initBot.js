@@ -15,7 +15,7 @@ async function initBot(interaction, client) {
 
     while (true) {
         const cancion = firstJSON();
-        if (!cancion) {
+        if (!cancion) { 
             console.log('No hay más canciones en la cola.');
             await interaction.followUp('Se ha alcanzado el final de la cola de canciones.');
             break;
