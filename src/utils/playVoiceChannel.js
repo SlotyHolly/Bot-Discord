@@ -26,7 +26,7 @@ async function playVoiceChannel(client, interaction, url) {
     });
 
     try {
-        const stream = ytdl(url, { filter: 'audioonly' });
+        const stream = ytdl(url, { filter: 'audioonly'});
         const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
         player.play(resource);
 

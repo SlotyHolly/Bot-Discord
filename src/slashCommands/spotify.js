@@ -30,7 +30,6 @@ const execute = async (interaction, client) => {
                 Authorization: `Basic ${Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64')}`
             }
         });
-
         const accessToken = response.data.access_token;
         let canciones = [];
 
