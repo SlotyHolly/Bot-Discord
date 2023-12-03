@@ -21,7 +21,7 @@ async function initBot(interaction, client) {
             break;
         }
         // Verifica si hay alguien en el canal de voz aparte del bot
-        if (voiceChannel && voiceChannel.members.size > 1) {
+        if (voiceChannel && voiceChannel.members.size === 1) {
             await interaction.channel.send('Ya hay alguien en el canal de voz.');
             break;
         }
