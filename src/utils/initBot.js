@@ -10,7 +10,6 @@ async function initBot(interaction, client) {
         await interaction.channel.send('Debes estar en un canal de voz para iniciar el bot.');
         return;
     }
-
     while (true) {
         const cancion = firstJSON();
         if (!cancion) { 
