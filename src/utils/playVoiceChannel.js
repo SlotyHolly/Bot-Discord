@@ -9,6 +9,9 @@ async function playVoiceChannel(client, interaction, url) {
     if (!player) {
         player = createAudioPlayer();
         client.queue.set(guildId, player);
+    } else {
+        // Elimina todos los listeners de error antiguos antes de añadir uno nuevo
+        player.removeAllListeners('error');
     }
 
     const connection = joinVoiceChannel({
@@ -19,14 +22,14 @@ async function playVoiceChannel(client, interaction, url) {
 
     connection.subscribe(player);
 
-    player.on('error', error => {
+    player.once('error', error => {
         console.error('Error en el reproductor de audio:', error);
-        interaction.followUp(`No se pudo reproducir la canción: ${url}`);
+        interaction.channel.send(`No se pudo reproducir la canción: ${url}`);
         // Aquí puedes agregar lógica para saltar a la siguiente canción en la cola
     });
 
     try {
-        const stream = ytdl(url, { filter: 'audioonly'});
+        const stream = ytdl(url, { filter: 'audioonly', quality: 'highestaudio'});
         const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
         player.play(resource);
 
@@ -36,7 +39,7 @@ async function playVoiceChannel(client, interaction, url) {
         });
     } catch (error) {
         console.error('Error al reproducir la canción:', error);
-        interaction.followUp(`No se pudo reproducir la canción: ${url}`);
+        interaction.channel.send(`No se pudo reproducir la canción: ${url}`);
         // Aquí puedes agregar lógica para saltar a la siguiente canción en la cola
     }
 }
