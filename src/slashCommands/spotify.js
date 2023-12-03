@@ -19,7 +19,7 @@ const data = new SlashCommandBuilder()
 const execute = async (interaction, client) => {
     // Obtener el argumento del comando
     const playlistLink = interaction.options.getString('playlist');
-
+    await interaction.deferReply();
     //try {
         // Dividir el enlace de la playlist para obtener el ID de la playlist
     const [, tipo, id] = playlistLink.split('/').filter(parte => parte !== 'open.spotify.com' && parte !== '' && parte !== 'intl-es');

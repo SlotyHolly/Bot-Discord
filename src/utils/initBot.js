@@ -11,8 +11,6 @@ async function initBot(interaction, client) {
         return;
     }
 
-    await interaction.deferReply();
-
     while (true) {
         const cancion = firstJSON();
         if (!cancion) { 
