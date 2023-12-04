@@ -14,10 +14,11 @@ function validarURLYoutube(url) {
 async function buscarCancionPorNombre(nombreCancion, artista) {
     try {
         const ytmusic = await new YTMusic().initialize();
-        const busqueda = nombreCancion + artista;
+        const busqueda = nombreCancion + " " + artista;
         const resultadoBusqueda = await ytmusic.search(busqueda);
         console.log(resultadoBusqueda);
-        const canciones = resultadoBusqueda.content.filter(item => item.type === 'SONG' && item.type === 'VIDEO');
+        // Filtra solo los resultados que son canciones o videos
+        const canciones = resultadoBusqueda.filter(item => item.type === 'SONG' || item.type === 'VIDEO');
         console.log("Esto es despues de filtrar");
         console.log(canciones);
 
