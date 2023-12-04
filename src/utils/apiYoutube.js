@@ -16,8 +16,13 @@ async function buscarCancionPorNombre(nombreCancion, artista) {
         const ytmusic = await new YTMusic().initialize();
 
         const resultadoBusqueda = await ytmusic.search((nombreCancion + artista), 'songs', { limit: 1 });
-        
-        const cancion = resultadoBusqueda.content[0];
+        const canciones = resultadoBusqueda.content.filter(item => item.type === 'SONG');
+
+        if (canciones.length === 0) {
+            throw new Error('Canción no encontrada');
+        }
+
+        const cancion = canciones.content[0];
         return {
             nombre: cancion.name,
             artista: cancion.artists.map(artista => artista.name).join(', '),
