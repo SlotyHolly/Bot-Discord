@@ -1,5 +1,5 @@
-const ytmusic = require('ytmusic-api');
-const api = new ytmusic();
+const YTMusic = require("ytmusic-api").default
+const api = new YTMusic();
 
 function extraerIdPlaylist(url) {
     const regex = /[&?]list=([a-zA-Z0-9_-]+)/;
