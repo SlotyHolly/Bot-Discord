@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+
 class Reproductor {
     constructor(client, channelId) {
         this.client = client; // Cliente de Discord
