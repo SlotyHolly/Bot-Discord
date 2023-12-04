@@ -1,4 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { buscarCancionPorNombre } = require('../utils/apiYoutube.js');
+const { initBot } = require('../utils/initBot.js');
+const { addSongToDatabase, deleteAllSongs } = require('../utils/querySql.js');
 
 const data = new SlashCommandBuilder()
     .setName('buscar')
@@ -11,12 +14,15 @@ const data = new SlashCommandBuilder()
 const execute = async (interaction, client) => {
 
     const cancionName = interaction.options.getString('nombre');
-
-    // Limpiamos la cola de reproducción
-    clearQueue();
-
-    // Llamar a la función newQueue para agregar la canción a la cola de reproducción
-    addQueue(cancionName);
+    await interaction.deferReply();
+    try {
+        const cancion = await buscarCancionPorNombre(cancionName);
+        await deleteAllSongs();
+        await addSongToDatabase(cancion);
+    } catch (error) {
+        await interaction.editReply('Hubo un error al obtener los datos de la canción de YouTube.');
+        return;
+    }
 
     initBot(interaction, client);
 }

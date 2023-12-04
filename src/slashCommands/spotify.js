@@ -1,11 +1,10 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const addQueue = require('../utils/addQueue.js');
 const initBot = require('../utils/initBot.js');
-const clearQueue = require('../utils/clearQueue.js');
+const addSongToDatabase = require('../utils/querySql.js');
 
 // Importar el módulo 'axios' para hacer solicitudes HTTP
 const axios = require('axios');
-const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET } = require('../../config.json');
+const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET} = require('../../config.json');
 
 const data = new SlashCommandBuilder()
     .setName('spotify')
@@ -38,27 +37,44 @@ const execute = async (interaction, client) => {
             const playlistResponse = await axios.get(`https://api.spotify.com/v1/playlists/${id}`, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
-            canciones = playlistResponse.data.tracks.items.map(item => `${item.track.name} - ${item.track.artists[0].name}`);
+            canciones = playlistResponse.data.tracks.items.map(item => {
+                const track = item.track;
+                const name = track.name;
+                const artist = track.artists[0].name;
+                const url = track.external_urls.spotify;
+                const duration = track.duration_ms;
+                return { name, artist, url, duration };
+            });
         } else if (tipo === 'album') {
             const albumResponse = await axios.get(`https://api.spotify.com/v1/albums/${id}`, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
-            canciones = albumResponse.data.tracks.items.map(item => `${item.name} - ${item.artists[0].name}`);
+            canciones = albumResponse.data.tracks.items.map(item => {
+                const name = item.name;
+                const artist = item.artists[0].name;
+                const url = item.external_urls.spotify;
+                const cover = item.album.images[0].url;
+                const duration = item.duration_ms;
+                return { name, artist, url, cover, duration };
+            });
         } else if (tipo === 'track') {
             const trackResponse = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
             const track = trackResponse.data;
-            canciones.push(`${track.name} - ${track.artists[0].name}`);
+            const name = track.name;
+            const artist = track.artists[0].name;
+            const url = track.external_urls.spotify;
+            const cover = track.album.images[0].url;
+            const duration = track.duration_ms;
+            canciones.push({ name, artist, url, cover, duration });
         }
 
-        // Limpiamos la cola de reproducción
-        clearQueue();
+        // Insertar cada canción en la base de datos
+        for (const song of canciones) {
+            await addSongToDatabase(song);
+        }
         
-        // Llamar a la función newQueue para cada canción
-        canciones.forEach(cancion => {
-            addQueue(cancion);
-        });
         await interaction.editReply('Reproducción iniciada.');
         initBot(interaction, client);
 

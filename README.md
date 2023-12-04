@@ -47,24 +47,32 @@ Instrucciones paso a paso sobre cómo instalar y configurar el bot en un servido
 ```git
 git clone https://github.com/SlotyHolly/Bot-Discord.git
 ```
-##### Instalar NodeJS: 
+##### Iniciar setup.sh para instalar las dependencias: 
 ```git
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl gnupg
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-```
-##### Actualizar source.list: 
-```git
-NODE_MAJOR=21
-echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
-```
-##### Actualizamos e instalamos NodeJS: 
-```git
-sudo apt-get update
-sudo apt-get install nodejs -y
+sudo chmod +x setup.sh
+sudo ./setup
 ```
 
+##### Configuración Inicial de MySQL:
+Aca se te pedirá que ingreses un usuario y contraseña para el usuario root de MySQL. Recuerda esta contraseña, ya que la necesitarás más adelante.
+```git
+sudo mysql_secure_installation
+```
+
+##### Crear Base de Datos y Tablas:
+'''git
+sudo mysql -u root -p
+CREATE DATABASE bot_discord;
+USE bot_discord;
+CREATE TABLE playlist (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    song_name VARCHAR(255) NOT NULL,
+    artist_name VARCHAR(255),
+    song_url VARCHAR(255),
+    cover_url VARCHAR(255),
+    duration INT
+);
+'''
 ##### Configurar config.json con sus claves de API:
 ```json
 {
@@ -73,7 +81,11 @@ sudo apt-get install nodejs -y
   "ID_SERVER": "TU_CLAVE_API",
   "CHANNEL_ID": "TU_CLAVE_API",
   "SPOTIFY_TOKEN": "TU_CLAVE_API",
-  "YOUTUBE_API_KEY": "TU_CLAVE_API"
+  "YOUTUBE_API_KEY": "TU_CLAVE_API",
+  "DB_HOST": "localhost",
+  "DB_USER": "EL_USUARIO_DE_TU_BASE_DE_DATOS",
+  "DB_PASSWORD": "LA_CONTRASEÑA_DE_TU_BASE_DE_DATOS",
+  "DB_DATABASE": "bot_discord"
 }
 ```
 
@@ -85,11 +97,6 @@ npm install
 ##### Cargar comandos en tu servidor:
 ```terminal
 npm run updatecommands
-```
-
-##### Instalar PM2 para montar el bot:
-```terminal
-npm install pm2 -g
 ```
 
 ##### Iniciar el Bot con PM2:
