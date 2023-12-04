@@ -14,10 +14,18 @@ function validarURLYoutube(url) {
 async function buscarCancionPorNombre(nombreCancion, artista) {
     try {
         const ytmusic = await new YTMusic().initialize();
+        const busqueda = nombreCancion + artista;
+        const resultadoBusqueda = await ytmusic.search(busqueda);
+        console.log(resultadoBusqueda);
+        const canciones = resultadoBusqueda.content.filter(item => item.type === 'SONG');
+        console.log("Esto es despues de filtrar");
+        console.log(canciones);
 
-        const resultadoBusqueda = await ytmusic.search((nombreCancion + artista), 'songs', { limit: 1 });
-        
-        const cancion = resultadoBusqueda.content[0];
+        if (canciones.length === 0) {
+            throw new Error('Canción no encontrada');
+        }
+
+        const cancion = canciones.content[0];
         return {
             nombre: cancion.name,
             artista: cancion.artists.map(artista => artista.name).join(', '),
