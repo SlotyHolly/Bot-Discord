@@ -72,6 +72,7 @@ CREATE TABLE playlist (
     cover_url VARCHAR(255),
     duration INT
 );
+
 '''
 ##### Configurar config.json con sus claves de API:
 ```json
