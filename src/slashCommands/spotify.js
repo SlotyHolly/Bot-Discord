@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const initBot = require('../utils/initBot.js');
-const addSongToDatabase = require('../utils/querySql.js');
+const { addSongToDatabase } = require('../utils/querySql.js');
 
 // Importar el módulo 'axios' para hacer solicitudes HTTP
 const axios = require('axios');
