@@ -17,11 +17,6 @@ async function initBot(interaction, client) {
             await interaction.channel.send('Se ha alcanzado el final de la cola de canciones.');
             break;
         }
-        // Verifica si hay alguien en el canal de voz aparte del bot
-        if (voiceChannel && voiceChannel.members.size === 1) {
-            await interaction.channel.send('Ya hay alguien en el canal de voz.');
-            break;
-        }
         try {
             // Verifica si la canción es una URL de YouTube
             if (validarURLYoutube(cancion)) {
@@ -35,11 +30,11 @@ async function initBot(interaction, client) {
                 await interaction.channel.send(`Reproduciendo: ${cancion}`);
                 await playVoiceChannel(client, interaction, songUrl);
 
-                // Verifica si el bot sigue en el canal de voz
+                // Verifia si el bot sigue en el canal de voz
                 if (!voiceChannel.members.has(interaction.client.user.id)) {
                     console.log('El bot ha sido desconectado del canal de voz.');
                     await interaction.channel.send('El bot ha sido desconectado del canal de voz.');
-                    break;
+                    break;c
             }
         }
 
