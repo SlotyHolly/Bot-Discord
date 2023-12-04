@@ -45,4 +45,10 @@ echo "Integrando MySQL con el Bot de Discord..."
 npm install mysql
 show_progress
 
+
+# Instalamos mysql2 para que funcione con sequelize
+echo "Instalando mysql2..."
+npm install mysql2
+show_progress
+
 echo "Instalación completada."
