@@ -53,7 +53,7 @@ const execute = async (interaction, client) => {
                 const name = item.name;
                 const artist = item.artists[0].name;
                 const url = item.external_urls.spotify;
-                const cover = item.album.images[0].url;
+                const cover = item.album.images && item.album.images.length > 0 ? item.album.images[0].url : 'https://files.readme.io/f2e91bb-portalDocs-sonosApp-defaultArtAlone.png';
                 const duration = item.duration_ms;
                 return { name, artist, url, cover, duration };
             });
