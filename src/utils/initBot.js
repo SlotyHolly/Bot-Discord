@@ -18,8 +18,8 @@ async function initBot(interaction, client) {
                 break;
             }
 
-            const { song_name, artist_name, song_url, cover_url, duration  } = cancion;
-
+            const { song_name, artist_name, song_url } = cancion;
+            
             if (validarURLYoutube(song_url)) {
                 await playVoiceChannel(interaction, client, song_url);
             } else {

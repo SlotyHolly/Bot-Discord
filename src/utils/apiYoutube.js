@@ -11,11 +11,11 @@ function validarURLYoutube(url) {
     return regex.test(url);
 }
 
-async function buscarCancionPorNombre(nombreCancion) {
+async function buscarCancionPorNombre(nombreCancion, artista) {
     try {
         const ytmusic = await new YTMusic().initialize();
 
-        const resultadoBusqueda = await ytmusic.search(nombreCancion, 'songs', { limit: 1 });
+        const resultadoBusqueda = await ytmusic.search((nombreCancion + artista), 'songs', { limit: 1 });
         
         const cancion = resultadoBusqueda.content[0];
         return {
