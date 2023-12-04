@@ -42,10 +42,12 @@ const execute = async (interaction, client) => {
                 const name = track.name;
                 const artist = track.artists[0].name;
                 const url = track.external_urls.spotify;
+                const cover = track.album.images && track.album.images.length > 0 ? track.album.images[0].url : 'https://files.readme.io/f2e91bb-portalDocs-sonosApp-defaultArtAlone.png';
                 const duration = track.duration_ms;
-                return { name, artist, url, duration };
+                return { name, artist, url, cover, duration };
             });
-        } else if (tipo === 'album') {
+        } 
+        else if (tipo === 'album') {
             const albumResponse = await axios.get(`https://api.spotify.com/v1/albums/${id}`, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
@@ -57,7 +59,8 @@ const execute = async (interaction, client) => {
                 const duration = item.duration_ms;
                 return { name, artist, url, cover, duration };
             });
-        } else if (tipo === 'track') {
+        } 
+        else if (tipo === 'track') {
             const trackResponse = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, {
                 headers: { Authorization: `Bearer ${accessToken}` }
             });
@@ -65,7 +68,7 @@ const execute = async (interaction, client) => {
             const name = track.name;
             const artist = track.artists[0].name;
             const url = track.external_urls.spotify;
-            const cover = track.album.images[0].url;
+            const cover = track.album.images && track.album.images.length > 0 ? track.album.images[0].url : 'https://files.readme.io/f2e91bb-portalDocs-sonosApp-defaultArtAlone.png';
             const duration = track.duration_ms;
             canciones.push({ name, artist, url, cover, duration });
         }
