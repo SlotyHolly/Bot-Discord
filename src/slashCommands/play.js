@@ -1,6 +1,5 @@
 const { AudioPlayerStatus } = require('@discordjs/voice');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const firsJSON = require('../utils/firstJSON.js');
 
 const data = new SlashCommandBuilder()
     .setName("play")

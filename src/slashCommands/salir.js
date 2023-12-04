@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { getVoiceConnection } = require('@discordjs/voice');
-const clearQueue = require('../utils/clearQueue.js');
+const { clearQueue } = require('../utils/querySql.js');
 
 const data = new SlashCommandBuilder()
     .setName("salir")
