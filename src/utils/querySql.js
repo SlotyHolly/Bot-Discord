@@ -80,7 +80,7 @@ async function shuffleQueue() {
 
 async function getTopTenSongs() {
     try {
-        const [rows] = await db.query('SELECT * FROM songs ORDER BY id LIMIT 10');
+        const [rows] = await db.query('SELECT * FROM playlist ORDER BY id LIMIT 10');
         return rows.map(row => {
             return {
                 song_name: row.song_name,
