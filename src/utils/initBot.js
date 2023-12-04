@@ -1,6 +1,8 @@
 const playVoiceChannel = require('./playVoiceChannel.js');
 const { getAndDeleteFirstSong } = require('./querySql.js');
 const { validarURLYoutube, buscarCancionPorNombre } = require('./apiYoutube.js');
+const { channelId } = require('../config.json');
+const Reproductor = require('./player.js');
 
 async function initBot(client, interaction) {
     const voiceChannel = interaction.member.voice.channel;
@@ -8,6 +10,7 @@ async function initBot(client, interaction) {
         await interaction.channel.send('Debes estar en un canal de voz para iniciar el bot.');
         return;
     }
+    const reproductor = new Reproductor(client, channelId);
 
     while (true) {
         try {
@@ -19,6 +22,7 @@ async function initBot(client, interaction) {
             }
 
             const { song_name, artist_name, song_url } = cancion;
+            await reproductor.setCancionActual(cancion);
             
             if (validarURLYoutube(song_url)) {
                 await playVoiceChannel(client, interaction, song_url);

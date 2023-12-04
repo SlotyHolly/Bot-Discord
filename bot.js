@@ -1,7 +1,6 @@
-const {Client, GatewayIntentBits, Partials, Collection} = require("discord.js");
+const {Client, GatewayIntentBits, Partials} = require("discord.js");
 const fs = require('fs');
-const config = require("./config.json");
-const discordTranscripts = require("discord-html-transcripts");
+const config = require("./config.json");;
 const Discord = require('discord.js');
 const client = new Client({
   intents: [  
@@ -60,17 +59,47 @@ client.on('ready', () => {
 client.queue = new Map();
 
 client.on('interactionCreate', async interaction => {
-  if (!interaction.isCommand()) return;
+  // Manejar comandos slash
+  if (interaction.isCommand()) {
+      const command = client.commands.get(interaction.commandName);
 
-  const command = client.commands.get(interaction.commandName);
+      if (!command) return;
 
-  if (!command) return;
-
-  try {
-    command.execute(interaction, client);
-  } catch (error) {
-      console.error(error);
-      await interaction.reply({ content: 'Hubo un error al ejecutar este comando!', ephemeral: true });
+      try {
+          await command.execute(interaction, client);
+      } catch (error) {
+          console.error(error);
+          await interaction.reply({ content: 'Hubo un error al ejecutar este comando!', ephemeral: true });
+      }
+  }
+  // Manejar interacciones de botones
+  else if (interaction.isButton()) {
+      switch (interaction.customId) {
+          case 'play':
+              const playCommand = client.commands.get('play');
+              if (playCommand) {
+                  await playCommand.execute(interaction, client);
+              }
+              break;
+          case 'pause':
+              const pauseCommand = client.commands.get('pause');
+              if (pauseCommand) {
+                  await pauseCommand.execute(interaction, client);
+              }
+              break;
+          case 'next':
+              const nextCommand = client.commands.get('next');
+              if (nextCommand) {
+                  await nextCommand.execute(interaction, client);
+              }
+              break;
+          case 'shuffle':
+              const shuffleCommand = client.commands.get('shuffle');
+              if (shuffleCommand) {
+                  await shuffleCommand.execute(interaction, client);
+              }
+              break;
+      }
   }
 });
 

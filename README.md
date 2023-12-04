@@ -70,7 +70,8 @@ CREATE TABLE playlist (
     artist_name VARCHAR(255),
     song_url VARCHAR(255),
     cover_url VARCHAR(255),
-    duration INT
+    duration INT,
+    shuffle_index INT
 );
 ```
 ##### Configurar config.json con sus claves de API:
