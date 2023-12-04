@@ -79,7 +79,7 @@ const execute = async (interaction, client) => {
         }
         
         await interaction.editReply('Reproducción iniciada.');
-        initBot(interaction, client);
+        initBot(client, interaction);
 
     } catch (error) {
         await interaction.editReply('Error al obtener los nombres de las canciones: ' + error);

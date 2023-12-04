@@ -2,7 +2,7 @@ const playVoiceChannel = require('./playVoiceChannel.js');
 const { getAndDeleteFirstSong } = require('./querySql.js');
 const { validarURLYoutube, buscarCancionPorNombre } = require('./apiYoutube.js');
 
-async function initBot(interaction, client) {
+async function initBot(client, interaction) {
     const voiceChannel = interaction.member.voice.channel;
     if (!voiceChannel) {
         await interaction.channel.send('Debes estar en un canal de voz para iniciar el bot.');
@@ -21,11 +21,11 @@ async function initBot(interaction, client) {
             const { song_name, artist_name, song_url } = cancion;
             
             if (validarURLYoutube(song_url)) {
-                await playVoiceChannel(interaction, client, song_url);
+                await playVoiceChannel(client, interaction, song_url);
             } else {
                 const detallesCancion = await buscarCancionPorNombre(song_name, artist_name);
                 // Asegúrate de que detallesCancion tiene la propiedad 'url'
-                await playVoiceChannel(interaction, client, detallesCancion.url);
+                await playVoiceChannel(client, interaction, detallesCancion.url);
             }
         } catch (error) {
             console.error('Error:', error);

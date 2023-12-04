@@ -46,7 +46,7 @@ const execute = async (interaction, client) => {
 
     // Iniciar la reproducción
     await interaction.editReply('Reproducción iniciada.');
-    initBot(interaction, client);
+    initBot(client, interaction);
 };
 
 module.exports = {
