@@ -17,7 +17,7 @@ async function buscarCancionPorNombre(nombreCancion, artista) {
         const busqueda = nombreCancion + artista;
         const resultadoBusqueda = await ytmusic.search(busqueda);
         console.log(resultadoBusqueda);
-        const canciones = resultadoBusqueda.content.filter(item => item.type === 'SONG');
+        const canciones = resultadoBusqueda.content.filter(item => item.type === 'SONG' && item.type === 'VIDEO');
         console.log("Esto es despues de filtrar");
         console.log(canciones);
 
