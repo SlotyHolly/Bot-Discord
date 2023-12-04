@@ -26,7 +26,7 @@ async function buscarCancionPorNombre(nombreCancion, artista) {
             throw new Error('Canción no encontrada');
         }
 
-        const cancion = canciones.content[0];
+        const cancion = canciones[0];
         return {
             nombre: cancion.name,
             artista: cancion.artists.map(artista => artista.name).join(', '),
