@@ -60,7 +60,7 @@ sudo mysql_secure_installation
 ```
 
 ##### Crear Base de Datos y Tablas:
-'''git
+```git
 sudo mysql -u root -p
 CREATE DATABASE bot_discord;
 USE bot_discord;
@@ -72,8 +72,7 @@ CREATE TABLE playlist (
     cover_url VARCHAR(255),
     duration INT
 );
-
-'''
+```
 ##### Configurar config.json con sus claves de API:
 ```json
 {
