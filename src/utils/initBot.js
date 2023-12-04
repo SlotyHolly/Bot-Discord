@@ -1,7 +1,7 @@
 const playVoiceChannel = require('./playVoiceChannel.js');
 const { getAndDeleteFirstSong } = require('./querySql.js');
 const { validarURLYoutube, buscarCancionPorNombre } = require('./apiYoutube.js');
-const { channelId } = require('../config.json');
+const { channelId } = require('../../config.json');
 const Reproductor = require('./player.js');
 
 async function initBot(client, interaction) {
