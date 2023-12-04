@@ -2,3 +2,4 @@ config.json
 pruebaYTMusic.js
 .vscode/
 node_modules/
+package-lock.json
