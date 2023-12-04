@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 class Reproductor {
     constructor(client, channelId) {
         this.client = client; // Cliente de Discord
@@ -5,7 +6,6 @@ class Reproductor {
         this.cancionActual = null; // La canción actual que se está reproduciendo
         this.embedMensaje = null; // El mensaje embed que muestra el reproductor
     }
-
     // Método para establecer la canción actual y actualizar el mensaje embed
     async setCancionActual(cancion) {
         this.cancionActual = cancion;
