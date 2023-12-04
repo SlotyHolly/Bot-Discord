@@ -28,7 +28,7 @@ show_progress
 
 # Instalación de MySQL
 echo "Instalando MySQL..."
-sudo apt install mysql-server -y
+sudo apt-get install default-mysql-server
 show_progress
 
 # Verificando el estado de MySQL
