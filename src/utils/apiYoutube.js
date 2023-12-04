@@ -17,10 +17,6 @@ async function buscarCancionPorNombre(nombreCancion) {
 
         const resultadoBusqueda = await ytmusic.search(nombreCancion, 'songs', { limit: 1 });
         
-        if (resultadoBusqueda.content.length === 0) {
-            throw new Error('Canción no encontrada');
-        }
-
         const cancion = resultadoBusqueda.content[0];
         return {
             nombre: cancion.name,
