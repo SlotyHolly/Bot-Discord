@@ -1,5 +1,4 @@
-const YTMusic = require("ytmusic-api").default
-const api = new YTMusic();
+const YTMusic = require("ytmusic-api").default;
 
 function extraerIdPlaylist(url) {
     const regex = /[&?]list=([a-zA-Z0-9_-]+)/;
@@ -14,9 +13,9 @@ function validarURLYoutube(url) {
 
 async function buscarCancionPorNombre(nombreCancion) {
     try {
-        await api.initalize();
+        const ytmusic = await new YTMusic().initialize();
 
-        const resultadoBusqueda = await api.search(nombreCancion, 'songs', { limit: 1 });
+        const resultadoBusqueda = await ytmusic.search(nombreCancion, 'songs', { limit: 1 });
         
         if (resultadoBusqueda.content.length === 0) {
             throw new Error('Canción no encontrada');
@@ -38,13 +37,11 @@ async function buscarCancionPorNombre(nombreCancion) {
 
 async function obtenerCancionesPlaylist(playlistId, canciones = [], pageToken = '') {
     try {
-        // Inicializa la API de YTMusic si es necesario
-        if (!api.initialized) {
-            await api.initalize();
-        }
+
+        const ytmusic = await new YTMusic().initialize();
 
         // Obtiene detalles de la playlist
-        const playlistDetails = await api.getPlaylist(playlistId, pageToken);
+        const playlistDetails = await ytmusic.getPlaylist(playlistId, pageToken);
 
         playlistDetails.tracks.forEach(track => {
             const songDetails = {
@@ -77,11 +74,11 @@ async function obtenerDatosCancion(url) {
             throw new Error('URL no válida');
         }
 
-        // Inicia la API de YTMusic
-        await api.initalize(); // Asegúrate de llamar a initialize antes de hacer cualquier solicitud
+        // Inicia la ytmusic de YTMusic
+        const ytmusic = await new YTMusic().initialize(); // Asegúrate de llamar a initialize antes de hacer cualquier solicitud
 
         // Realiza la solicitud para obtener los detalles del video
-        const detallesCancion = await api.getSong(videoId);
+        const detallesCancion = await ytmusic.getSong(videoId);
         
         // Procesa y devuelve los datos necesarios
         return {
